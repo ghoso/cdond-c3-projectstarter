@@ -153,12 +153,12 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text \
               > .circleci/ansible/inventory.txt
-            cp .circleci/ansible/inventory.txt project/workspace/inventory.txt
+            cp .circleci/ansible/inventory.txt /workspace/inventory.txt
             cat .circle/ansible/inventory.txt
       - persist_to_workspace:
-          root: workspace
+          root: /workspace
           paths:
-            - inventory.txt
+            - ./*
 
 workflows:
   default:
