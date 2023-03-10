@@ -1,0 +1,11 @@
+---
+- name: configure server
+  become: true
+  apt:
+    update_cache: true
+    upgrade: true
+    pkg:
+      - nodejs
+      - npm
+      - pm2
+    state: latest
