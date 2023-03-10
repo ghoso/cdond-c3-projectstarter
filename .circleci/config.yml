@@ -161,6 +161,29 @@ jobs:
           paths:
             - ./*
 
+  configure-infrastructure:
+    docker:
+      - image: cimg/node:13.8.0
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "f8:ee:e1:4f:a3:a7:0b:6c:cc:eb:86:91:3f:c1:5c:09"
+      - attach_workspace:
+          at: workspace
+      - run:
+          name: Install dependencies
+          command: |
+            apt install -y tar zgip curl ansible
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i workspace/inventory.txt configure-server.yml
+      # Here's where you will add some code to rollback on failure
 workflows:
   default:
     jobs:
@@ -176,3 +199,5 @@ workflows:
       #   requires: [build-backend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend]
+      - configure-infrastructure:
+          require: [deploy-infrastructure]
