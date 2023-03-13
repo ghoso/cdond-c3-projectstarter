@@ -197,13 +197,8 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm cache clean --force
-            rm -rf node_modules
-            echo "TYPEORM_HOST=${TYPEORM_HOST}"
-            echo "TYPEORM_DATABASE=${TYPEORM_DATABASE}"
-            echo "TYPEORM_PORT=${TYPEORM_PORT}"
-            echo "TYPEORM_USERNAME=${TYPEORM_USERNAME}"
-            echo "TYPEORM_PASSWORD=${TYPEORM_PASSWORD}"
+            # npm cache clean --force
+            # rm -rf node_modules
             npm install
             npm run migrations > migrations_dump.txt
       - run:
