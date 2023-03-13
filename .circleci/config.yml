@@ -198,6 +198,7 @@ jobs:
           command: |
             cd backend
             npm cache clean --force
+            rm -rf node_modules
             npm install
             npm run migrations > migrations_dump.txt
       - run:
@@ -207,7 +208,7 @@ jobs:
             then
               curl https://kvdb.io/KYoayqoa12QConPZsiTyWG/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
-       
+
 workflows:
   default:
     jobs:
