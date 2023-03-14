@@ -255,7 +255,7 @@ jobs:
           name: Install dependencies
           command: |
             yum -y update
-            yum install -y tar gzip curl
+            yum install -y tar gzip curl unzip
             curl -sL https://rpm.nodesource.com/setup_10.x | bash -
             yum install -y nodejs
             amazon-linux-extras install ansible2 -y
