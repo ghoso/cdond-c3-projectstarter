@@ -222,6 +222,7 @@ jobs:
           command: |
             cd .circleci/ansible
             cat /tmp/workspace/inventory.txt
+            export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i /tmp/workspace/inventory.txt configure-server.yml
 
   run-migrations:
