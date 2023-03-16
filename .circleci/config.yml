@@ -15,9 +15,9 @@ commands:
           name: Destroy environment
           when: on_fail
           command: |
-            aws --region us-west-1 s3 rm s3://udapeople-<< parameters.Workflow_ID >> --recursive
-            aws --region us-west-1 cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
-            aws --region us-west-1 cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+            aws --region us-east-1 s3 rm s3://udapeople-<< parameters.Workflow_ID >> --recursive
+            aws --region us-east-1 cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
+            aws --region us-east-1 cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
   revert-migrations:
     description: Revert the last migration if successfully run in the present workflow
     parameters:
@@ -328,7 +328,7 @@ jobs:
           name: Get backend url
           command: |
             # Fetch and prepare the BACKEND_IP env var
-            export BACKEND_IP=$(aws --region us-west-1 ec2 describe-instances --filters "Name=tag:project,Values=udapeople" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            export BACKEND_IP=$(aws --region us-east-1 ec2 describe-instances --filters "Name=tag:project,Values=udapeople" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
       - run:
