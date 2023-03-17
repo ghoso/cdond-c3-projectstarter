@@ -292,7 +292,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["e4:cc:9e:58:b1:5b:2d:1c:46:89:20:28:d0:4c:12:12"]
       - attach_workspace:
-          at: ~/
+          at: /tmp/workspace
       - run:
           name: Install dependencies
           command: |
@@ -309,8 +309,8 @@ jobs:
             tar -C backend -czvf artifact.tar.gz .
             cd .circleci/ansible
             echo "Contents of the inventory.txt file is ---------"
-            cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            cat /tmp/workspace/inventory.txt
+            ansible-playbook -i /tmp/workspace/inventory.txt deploy-backend.yml
       - revert-migrations
       - destroy-environment
 
