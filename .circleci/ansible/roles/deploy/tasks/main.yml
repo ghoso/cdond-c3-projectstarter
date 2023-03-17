@@ -50,5 +50,5 @@
     cd /home/ubuntu/work
     pm2 start npm -- run start
     cd dist
-    pm2 start mian.js --update-env
+    pm2 start main.js --update-env
     sleep 60
