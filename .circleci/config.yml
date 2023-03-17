@@ -302,11 +302,11 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
-            cp package* ./dist
-            cd ..
-            tar -C backend -czvf artifact.tar.gz .
+            #cp package* ./dist
+            #cd ..
+            #tar -C backend -czvf artifact.tar.gz .
             cd .circleci/ansible
             echo "Contents of the inventory.txt file is ---------"
             cat /tmp/workspace/inventory.txt
