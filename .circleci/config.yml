@@ -370,6 +370,38 @@ jobs:
       - destroy-environment
       - revert-migrations
 
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum update -y
+            yum install -y curl
+            yum install -y tar gzip
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            export OldWorkflowID=$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --region us-west-1 --no-paginate --output text)
+            echo ${OldWorkflowID} >> ~/oldworkflowID.txt
+            cat ~/oldworkflowID.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - oldworkflowID.txt
+      - run:
+          name: Deploy distribution
+          command: |
+             aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+               --stack-name InitialStack \
+               --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+               --tags project=udapeople
+             echo OldWorkflowID: "${OldWorkflowID}"
+             echo New WorkflowID: ${CIRCLE_WORKFLOW_ID:0:7}
+
 workflows:
   default:
     jobs:
